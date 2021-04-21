@@ -17,7 +17,6 @@ namespace CronFunctionDemo
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
             string apiEndpoint = System.Environment.GetEnvironmentVariable(ApiEndpointKeyLabel, EnvironmentVariableTarget.Process);
-            log.LogInformation($"{apiEndpoint} loaded");
             if (string.IsNullOrEmpty(apiEndpoint))
             {
                 log.LogInformation($"{apiEndpoint} not available");
