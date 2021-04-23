@@ -31,9 +31,15 @@ namespace CronFunctionDemo
                 HttpRequestMessage newRequest = new HttpRequestMessage(HttpMethod.Get, versionUri);
 
                 HttpResponseMessage response = await newClient.SendAsync(newRequest);
-                string apiVersion = await response.Content.ReadAsAsync<string>();
-
-                log.LogInformation($"{apiEndpoint} has version {apiVersion}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiVersion = await response.Content.ReadAsStringAsync();
+                    log.LogInformation($"{apiEndpoint} has version {apiVersion}");
+                }
+                else
+                {
+                    log.LogError($"{apiEndpoint} reports {response.ReasonPhrase} ({response.StatusCode})");
+                }
             }
             catch (System.Exception ex)
             {
